@@ -1,17 +1,12 @@
 import type { Metadata } from "next";
 
-import { CreateRecommendationContent } from "./components/create-recommendation-content";
-import { getCreateRecommendationPageData } from "./lib/create-recommendation-query";
-
-export const dynamic = "force-dynamic";
+import { RecommendationCreateClientPage } from "@/features/doctor/recommendations/components/RecommendationFormClientPage";
 
 export const metadata: Metadata = {
-  title: "Tambah Rekomendasi | Face Skin Detection",
-  description: "Tambah rule rekomendasi skincare - Dashboard Dokter",
+  title: "Tambah Rekomendasi",
+  description: "Tambah rule rekomendasi skincare baru - Dashboard Dokter",
 };
 
-export default async function CreateRecommendationPage() {
-  const pageData = await getCreateRecommendationPageData();
-
-  return <CreateRecommendationContent {...pageData} />;
+export default function CreateRecommendationPage() {
+  return <RecommendationCreateClientPage />;
 }

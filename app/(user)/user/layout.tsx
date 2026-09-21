@@ -1,12 +1,12 @@
 import type { ReactNode } from "react";
 
-import NavbarUsers from "@/components/users/navbar-users";
+import { DashboardLayout } from "@/components/AppShell";
+import { ProtectedRoute } from "@/features/auth/components/ProtectedRoute";
 
 export default function UserLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="min-h-screen bg-slate-50">
-      <NavbarUsers />
-      {children}
-    </div>
+    <ProtectedRoute allowedRoles={["user"]}>
+      <DashboardLayout role="user">{children}</DashboardLayout>
+    </ProtectedRoute>
   );
 }

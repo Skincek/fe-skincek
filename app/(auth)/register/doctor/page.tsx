@@ -1,15 +1,17 @@
 import type { Metadata } from "next";
 
-import { DoctorRegisterView } from "@/components/auth/doctor-register-view";
-import { redirectIfAuthenticated } from "@/lib/auth/session-redirect";
+import { DoctorRegisterView } from "@/features/auth/components/DoctorRegisterView";
+import { RedirectIfAuthenticated } from "@/features/auth/components/RedirectIfAuthenticated";
 
 export const metadata: Metadata = {
-  title: "Register Dokter | Face Skin Detection",
+  title: "Register Dokter",
   description: "Daftar sebagai dokter terverifikasi",
 };
 
-export default async function RegisterDoctorPage() {
-  await redirectIfAuthenticated();
-
-  return <DoctorRegisterView />;
+export default function RegisterDoctorPage() {
+  return (
+    <RedirectIfAuthenticated>
+      <DoctorRegisterView />
+    </RedirectIfAuthenticated>
+  );
 }

@@ -1,15 +1,17 @@
 import type { Metadata } from "next";
 
-import { RegisterView } from "@/components/auth/register-view";
-import { redirectIfAuthenticated } from "@/lib/auth/session-redirect";
+import { RegisterView } from "@/features/auth/components/RegisterView";
+import { RedirectIfAuthenticated } from "@/features/auth/components/RedirectIfAuthenticated";
 
 export const metadata: Metadata = {
-  title: "Register | Face Skin Detection",
+  title: "Register",
   description: "Daftar akun baru",
 };
 
-export default async function RegisterPage() {
-  await redirectIfAuthenticated();
-
-  return <RegisterView />;
+export default function RegisterPage() {
+  return (
+    <RedirectIfAuthenticated>
+      <RegisterView />
+    </RedirectIfAuthenticated>
+  );
 }

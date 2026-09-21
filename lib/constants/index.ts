@@ -1,5 +1,5 @@
 // =============================================================
-// Constants - Face Skin Detection System
+// Constants - Face Skincek System
 // =============================================================
 
 export const SKIN_CLASSES = [
@@ -44,7 +44,7 @@ export const DOCTOR_DOC_CONFIG = {
   ACCEPTED_FORMATS: ["application/pdf", "image/jpeg", "image/png"],
 } as const;
 
-// Routes
+// Routes — ALL STATIC (identitas item lewat query param, bukan dynamic segment)
 export const ROUTES = {
   HOME: "/",
   LOGIN: "/login",
@@ -52,31 +52,39 @@ export const ROUTES = {
   REGISTER_DOCTOR: "/register/doctor",
   USER: {
     DASHBOARD: "/user/home",
-    SCAN: "/user/pemeriksaan",
+    SCAN: "/user/scan",
     HISTORY: "/user/history",
+    HISTORY_DETAIL: (id: string) => `/user/history/detail?id=${encodeURIComponent(id)}`,
+    CONSULTATIONS: "/user/consultations",
+    DOCTOR_PROFILE: (uuid: string) => `/user/consultations/detail?uuid=${encodeURIComponent(uuid)}`,
   },
   DOCTOR: {
     DASHBOARD: "/doctor/dashboard",
+    CONSULTATIONS: "/doctor/consultations",
     SKINCARE: "/doctor/skincare",
     SKINCARE_CREATE: "/doctor/skincare/create",
-    SKINCARE_EDIT: (id: string) => `/doctor/skincare/${id}/edit`,
+    SKINCARE_EDIT: (id: string) => `/doctor/skincare/edit?id=${encodeURIComponent(id)}`,
     RECOMMENDATIONS: "/doctor/recommendations",
     RECOMMENDATIONS_CREATE: "/doctor/recommendations/create",
-    RECOMMENDATIONS_EDIT: (id: string) => `/doctor/recommendations/${id}/edit`,
+    RECOMMENDATIONS_EDIT: (id: string) => `/doctor/recommendations/edit?id=${encodeURIComponent(id)}`,
     SKIN_CONCERNS: "/doctor/skin-concerns",
-    SKIN_CONCERNS_CREATE: "/doctor/skin-concerns/create",
-    SKIN_CONCERNS_EDIT: (id: string) => `/doctor/skin-concerns/${id}/edit`,
+    SKIN_CONCERNS_DETAIL: (id: string) => `/doctor/skin-concerns/detail?id=${encodeURIComponent(id)}`,
+    SKIN_TYPES: "/doctor/skin-types",
     VERIFICATION_STATUS: "/doctor/verification-status",
   },
   ADMIN: {
     DASHBOARD: "/admin/dashboard",
     USERS: "/admin/users",
+    USER_DETAIL: (id: string) => `/admin/users/detail?id=${encodeURIComponent(id)}`,
     DOCTORS: "/admin/doctors",
+    DOCTOR_DETAIL: (id: string) => `/admin/doctors/detail?id=${encodeURIComponent(id)}`,
     DOCTOR_VERIFICATIONS: "/admin/doctor-verifications",
+    DOCTOR_VERIFICATION_DETAIL: (id: string) => `/admin/doctor-verifications/detail?id=${encodeURIComponent(id)}`,
+    ACTIVITY_LOG: "/admin/activity-log",
   },
 } as const;
 
-// Supabase Storage Buckets
+// Storage Buckets
 export const STORAGE_BUCKETS = {
   SKIN_IMAGES: "skin-images",
   DOCTOR_DOCUMENTS: "doctor-documents",
@@ -91,9 +99,7 @@ export const YOLO_CONFIG = {
 export const DISCLAIMER =
   "Hasil deteksi aplikasi ini merupakan prediksi awal berbasis gambar dan tidak menggantikan diagnosis medis. Untuk kondisi kulit berat, nyeri, meradang, atau tidak membaik, konsultasikan langsung dengan dokter.";
 
-// Auth session
-// Durasi cookie sesi login Supabase: 3 hari (dalam detik).
-// Karena cookie ditulis ulang setiap kali sesi di-refresh, durasi ini bersifat
+// Auth session — durasi cookie sesi login (Sanctum token via HttpOnly cookie).
 // "sliding window" — selama pengguna aktif dalam 3 hari, sesi tetap berlanjut.
 // Setelah 3 hari tanpa aktivitas, cookie kedaluwarsa dan pengguna harus login kembali.
 export const SESSION_MAX_AGE_SECONDS = 60 * 60 * 24 * 3; // 259200
